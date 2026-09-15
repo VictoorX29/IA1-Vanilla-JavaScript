@@ -68,3 +68,19 @@ document.querySelector('#buttonColor').addEventListener('click', () => {
 			break;
 	}
 });
+let turno = 'A';
+const buttonDado = document.querySelector('#lanzarDado');
+const msgDado = document.querySelector('#msgDado');
+buttonDado.addEventListener('click', dadoLanzado);
+function dadoLanzado(e) {
+	e.preventDefault();
+	let dado = Math.floor(Math.random() * 6 + 1);
+	if (turno === 'A') {
+		msgDado.textContent = `El jugador A ha sacado un ${dado} .`;
+		turno = 'B';
+	} else {
+		msgDado.textContent = `El jugador B ha sacado un ${dado} .`;
+		turno = 'A';
+	}
+	document.querySelector('#msgTurno span').textContent = turno;
+}
