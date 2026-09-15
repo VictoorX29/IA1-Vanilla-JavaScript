@@ -31,7 +31,7 @@ document.querySelector('#numero').addEventListener('submit', function (e) {
 				? 'El número tiene que ser menor a 11'
 				: 'El número es correcto';
 });
-
+const mensajeEstado = document.querySelector('#msgEstat');
 document.querySelector('#selectEstat').addEventListener('change', () => {
 	switch (document.querySelector('#selectEstat').value) {
 		case 'inicio':
@@ -49,5 +49,22 @@ document.querySelector('#selectEstat').addEventListener('change', () => {
 	}
 });
 function definirMsgEstat(mensaje) {
-	document.querySelector('#msgEstat').textContent = mensaje;
+	mensajeEstado.textContent = mensaje;
 }
+
+document.querySelector('#buttonColor').addEventListener('click', () => {
+	switch (mensajeEstado.classList.value) {
+		case '':
+			mensajeEstado.classList.value = 'verde';
+			break;
+		case 'verde':
+			mensajeEstado.classList.value = 'rojo';
+			break;
+		case 'rojo':
+			mensajeEstado.classList.value = 'azul';
+			break;
+		case 'azul':
+			mensajeEstado.classList.value = 'verde';
+			break;
+	}
+});
