@@ -12,7 +12,22 @@
 		<button id="multi">Multiplicación</button>
 		<div id="suma"></div>
 		<div id="mult"></div>
-		<input type="text" name="num" id="num" />
+		<form id="numero">
+			<input type="text" id="num" />
+			<button type="submit">Enviar</button>
+			<p id="errorNum"></p>
+		</form>
+		<div>
+			<select name="selectEstat" id="selectEstat">
+				<option value="" disabled selected>Selecciona una opción</option>
+				<option value="inicio">Inicio</option>
+				<option value="turnoA">Turno A</option>
+				<option value="turnoB">Turno B</option>
+				<option value="final">Final</option>
+			</select>
+			<p id="msgEstat"></p>
+		</div>
+
 		<script src="index.js"></script>
 	</body>
 </html>
