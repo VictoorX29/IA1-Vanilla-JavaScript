@@ -31,10 +31,27 @@
 		</div>
 		<div>
 			<p id="msgTurno">Es turno del jugador <span>A</span></p>
-			<p id="msgDado"></p>
+			<p id="msgCasilla"></p>
 			<button id="lanzarDado">Lanzar Dado</button>
+			<p id="msgDado"></p>
 		</div>
-
+		<div>
+			<p id="msgJugA">Jugador A: <span></span></p>
+			<form action="" id="formNom">
+				<input type="text" id="inputFormNom" />
+				<button type="submit">Enviar nombre</button>
+			</form>
+		</div>
+		<div>
+			<p id="infoJugA">
+				El jugador A está en la casilla <span id="casillaNum"> </span> (
+				<span id="casillaText"> </span> )
+			</p>
+			<p id="infoJugB">
+				El jugador B está en la casilla <span id="casillaNum"> </span> (
+				<span id="casillaText"> </span> )
+			</p>
+		</div>
 		<script src="index.js"></script>
 	</body>
 </html>

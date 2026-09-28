@@ -69,18 +69,59 @@ document.querySelector('#buttonColor').addEventListener('click', () => {
 	}
 });
 let turno = 'A';
+let casillaA = 0;
+let casillaB = 0;
 const buttonDado = document.querySelector('#lanzarDado');
 const msgDado = document.querySelector('#msgDado');
+const msgCasi = document.querySelector('#msgCasilla');
 buttonDado.addEventListener('click', dadoLanzado);
 function dadoLanzado(e) {
 	e.preventDefault();
 	let dado = Math.floor(Math.random() * 6 + 1);
 	if (turno === 'A') {
 		msgDado.textContent = `El jugador A ha sacado un ${dado} .`;
-		turno = 'B';
+		casillaA += dado;
 	} else {
 		msgDado.textContent = `El jugador B ha sacado un ${dado} .`;
+		casillaB += dado;
+	}
+	document.querySelector('#msgTurno span').textContent =
+		`${turno} ( ${turno === 'A' ? `${casillaA}` : `${casillaB}`} )`;
+
+	document.querySelector(`#infoJug${turno} #casillaNum`).innerHTML =
+		turno === 'A' ? casillaA : casillaB;
+	document.querySelector(`#infoJug${turno} #casillaText`).innerHTML =
+		turno === 'A' ? casillas[casillaA] : casillas[casillaB];
+	if (turno === 'A') {
+		turno = 'B';
+	} else {
 		turno = 'A';
 	}
-	document.querySelector('#msgTurno span').textContent = turno;
 }
+document.querySelector('#formNom').addEventListener('submit', function (e) {
+	e.preventDefault();
+	document.querySelector('#msgJugA span').textContent =
+		document.querySelector('#inputFormNom').value;
+});
+const casillas = [
+	'Salida',
+	'Poble',
+	'Puente',
+	'Posada',
+	'Bosque',
+	'Pozo',
+	'Oca',
+	'Dados',
+	'Laberinto',
+	'Cárcel',
+	'Calavera',
+	'Molino',
+	'Río',
+	'Playa',
+	'Castillo',
+	'Puerta',
+	'Fuente',
+	'Montaña',
+	'Faro',
+	'Final',
+];
