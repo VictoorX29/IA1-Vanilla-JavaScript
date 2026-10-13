@@ -7,3 +7,11 @@
 .azul {
 	color: blue;
 }
+#tablero {
+	display: grid;
+	grid-template-columns: repeat(5, 150px);
+	text-align: center;
+}
+#tablero div {
+	padding: 8px;
+}

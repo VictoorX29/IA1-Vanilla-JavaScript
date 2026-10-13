@@ -381,18 +381,45 @@ function generarPregunta() {
 	htmlPregs += '</ul>';
 	document.querySelector('#divPreguntas').innerHTML = htmlPregs;
 	const respuestas = document.querySelectorAll('#divPregunta .respuestas');
+	let acertada = false;
 	respuestas.forEach((respuesta) => {
 		respuesta.addEventListener('click', () => {
 			const numero = respuesta.id.slice(9, 10);
 			const txtRespuesta = document.querySelector('#tipoRespuesta');
-			do {
+			if (!acertada) {
 				if (numero == preguntas[preguntaRand].correcta) {
 					txtRespuesta.textContent = '¡Has acertado!';
+					acertada = true;
 				} else {
-					txtRespuesta.textContent = 'Has fallado';
+					if (txtRespuesta.textContent.includes('Has')) {
+						if (txtRespuesta.textContent.includes('vuelto a fallar')) {
+							txtRespuesta.textContent = txtRespuesta.textContent.replace(
+								'vuelto',
+								'vuelto y vuelto',
+							);
+						} else {
+							txtRespuesta.textContent = txtRespuesta.textContent.replace(
+								'fallado',
+								'vuelto a fallar',
+							);
+						}
+					} else {
+						txtRespuesta.textContent = 'Has fallado';
+					}
 				}
-			} while (txtRespuesta.textContent != '¡Has acertado!');
+			}
 		});
 	});
 }
 generarPregunta();
+const casillasN = [
+	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+];
+function generarTablero() {
+	html = '';
+	for (const n of casillasN) {
+		html += `<div>${n}</div>`;
+	}
+	document.querySelector('#tablero').innerHTML = html;
+}
+generarTablero();
