@@ -15,3 +15,10 @@
 #tablero div {
 	padding: 8px;
 }
+#divTableroJugadores {
+	position: relative;
+	display: inline-flex;
+}
+#fichasJugadores {
+	position: absolute;
+}

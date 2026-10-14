@@ -418,7 +418,7 @@ const casillasN = [
 function generarTablero() {
 	html = '';
 	for (const n of casillasN) {
-		html += `<div>${n}</div>`;
+		html += `<div id="divCas${n}">${n}</div>`;
 	}
 	document.querySelector('#tablero').innerHTML = html;
 }
