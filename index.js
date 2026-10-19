@@ -423,3 +423,17 @@ function generarTablero() {
 	document.querySelector('#tablero').innerHTML = html;
 }
 generarTablero();
+
+// EJERCICIO 11
+const jugadorA = {
+	letra: 'A',
+	nombre: 'Alba',
+	posicion: 10,
+	activado: true,
+};
+document.querySelector('#infoJugadorA').innerHTML = `
+<p>Jugador: ${jugadorA.nombre}</p>
+<p>Letra: ${jugadorA.letra}</p>
+<p>Está en la posición ${jugadorA.posicion} (${casillas[jugadorA.posicion]})</p>
+<p>${jugadorA.activado ? 'Es su turno' : 'NO es su turno'}</p>
+`;
