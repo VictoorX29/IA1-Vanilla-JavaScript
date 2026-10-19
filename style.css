@@ -17,8 +17,23 @@
 }
 #divTableroJugadores {
 	position: relative;
-	display: inline-flex;
 }
-#fichasJugadores {
+.fichas {
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	position: absolute;
+}
+#divFichJugA {
+	background-color: red;
+	top: 0;
+	left: 40px;
+}
+#divFichJugB {
+	background-color: blue;
+	top: 0;
+	left: 80px;
 }
