@@ -1,24 +1,54 @@
-.verde {
-	color: green;
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
-.rojo {
-	color: red;
-}
-.azul {
-	color: blue;
-}
-#tablero {
+body {
 	display: grid;
-	grid-template-columns: repeat(5, 150px);
-	text-align: center;
+	grid-template-columns: 25% auto;
 }
-#tablero div {
-	padding: 8px;
+.menuLateral {
+	padding-block: 16px;
+	padding-inline: 24px;
+	background-color: rgba(47, 128, 237, 0.5);
 }
-#divTableroJugadores {
+main {
+	width: 100%;
+	margin: 0 auto;
+}
+.tablero {
+	display: flex;
+	justify-content: center;
+	height: 100vh;
 	position: relative;
-	display: inline-flex;
 }
-#fichasJugadores {
+.tablero img {
+	max-width: 100%;
+	height: auto;
+}
+.fichas {
+	width: 50px;
+	height: 50px;
 	position: absolute;
+	border-radius: 50%;
+}
+.fichaA {
+	--x: ;
+	--y: ;
+	background-color: red;
+	left: 0;
+	top: 0;
+	display: none;
+}
+.fichaB {
+	--x: ;
+	--y: ;
+	background-color: blue;
+	left: 0;
+	top: 0;
+	display: none;
+}
+
+.hidden {
+	display: none !important;
 }

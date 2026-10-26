@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,68 +7,25 @@
 		<link rel="stylesheet" href="style.css" />
 	</head>
 	<body>
-		<h1>IA1 - Vanilla JavaScript</h1>
-		<div id="main"></div>
-		<button id="sumar">Sumar</button>
-		<button id="multi">Multiplicación</button>
-		<div id="suma"></div>
-		<div id="mult"></div>
-		<form id="numero">
-			<input type="text" id="num" />
-			<button type="submit">Enviar</button>
-			<p id="errorNum"></p>
-		</form>
-		<div>
-			<select name="selectEstat" id="selectEstat">
-				<option value="" disabled selected>Selecciona una opción</option>
-				<option value="inicio">Inicio</option>
-				<option value="turnoA">Turno A</option>
-				<option value="turnoB">Turno B</option>
-				<option value="final">Final</option>
-			</select>
-			<p id="msgEstat"></p>
-			<button id="buttonColor">Cambiar color</button>
-		</div>
-		<div>
-			<p id="msgTurno">Es turno del jugador <span>A</span></p>
-			<p id="msgCasilla"></p>
-			<button id="lanzarDado">Lanzar Dado</button>
-			<p id="msgDado"></p>
-		</div>
-		<div>
-			<p id="msgJugA">Jugador A: <span></span></p>
-			<form action="" id="formNom">
-				<input type="text" id="inputFormNom" />
-				<button type="submit">Enviar nombre</button>
-			</form>
-		</div>
-		<div>
-			<p id="infoJugA">
-				El jugador A está en la casilla <span id="casillaNum"> </span> (
-				<span id="casillaText"> </span> )
+		<div class="menuLateral">
+			<h1>Juego de la oca</h1>
+			<button id="btnStartGame">Empezar partida</button>
+			<p id="msgTurnoJugador" class="hidden">
+				Es el turno del Jugador <span></span>
 			</p>
-			<p id="infoJugB">
-				El jugador B está en la casilla <span id="casillaNum"> </span> (
-				<span id="casillaText"> </span> )
-			</p>
+			<button id="buttonA">Avanzar A</button>
+			<button id="buttonB">Avanzar B</button>
 		</div>
 
-		<div id="divPregunta">
-			<h2></h2>
-			<div id="divPreguntas"></div>
-			<p id="tipoRespuesta"></p>
-		</div>
-		<div id="divTableroJugadores">
-			<div id="tablero"></div>
-			<div id="fichasJugadores">
-				<div id="divFichJugA">
-					<img src="" alt="" />
-				</div>
-				<div id="divFichJugB">
-					<img src="" alt="" />
+		<main>
+			<div class="container">
+				<div class="tablero">
+					<img src="images/tablero.webp" alt="" />
+					<div class="fichaA fichas"></div>
+					<div class="fichaB fichas"></div>
 				</div>
 			</div>
-		</div>
-		<script src="index.js"></script>
+		</main>
+		<script type="module" src="game.js"></script>
 	</body>
 </html>
