@@ -449,3 +449,6 @@ document.querySelector('#ejercicio12').addEventListener('click', () => {
 	jugadorA.posicion += parseInt(spanEjer12.textContent);
 	actualizarJugadorA();
 });
+
+// EJERCICIO 13
+const mensaje = `Jugador ${nombreJugador} ha sacado un ${tirarDado()}`;
