@@ -1,3 +1,6 @@
+// Importar array de preguntas
+import { preguntas } from './data/preguntas.js';
+
 const tablero = [
 	{
 		fichas: {
@@ -31,6 +34,8 @@ const partida = {
 		{ nombre: '', posicion: 0 },
 	],
 };
+const generarDado = () => Math.floor(Math.random() * 6) + 1;
+
 // Botones
 const buttonStartGame = document.querySelector('#btnStartGame');
 const buttonFichaA = document.querySelector('#buttonA');
@@ -42,6 +47,9 @@ const fichaB = document.querySelector('.fichaB');
 const divTablero = document.querySelector('.tablero img');
 
 const msgTurnoJug = document.querySelector('#msgTurnoJugador');
+
+// Mensaje para sacar por pantalla
+const msgJugDado = ()
 
 // Listener para posiciones del tablero
 divTablero.addEventListener('click', (e) => {
@@ -70,6 +78,6 @@ function colocarFichasInicio() {
 }
 
 // Listeners buttons avanzar fichas
-const generarDado = ()=>{}
+
 buttonFichaA.addEventListener('click', () => {});
 buttonFichaB.addEventListener('click', () => {});
