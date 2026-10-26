@@ -74,10 +74,10 @@ let casillaB = 0;
 const buttonDado = document.querySelector('#lanzarDado');
 const msgDado = document.querySelector('#msgDado');
 const msgCasi = document.querySelector('#msgCasilla');
+let dado = Math.floor(Math.random() * 6 + 1);
 buttonDado.addEventListener('click', dadoLanzado);
 function dadoLanzado(e) {
 	e.preventDefault();
-	let dado = Math.floor(Math.random() * 6 + 1);
 	if (turno === 'A') {
 		msgDado.textContent = `El jugador A ha sacado un ${dado} .`;
 		casillaA += dado;
@@ -425,10 +425,11 @@ function generarTablero() {
 generarTablero();
 
 // EJERCICIO 11
-const jugadorA = {
+let jugadorA = {
 	letra: 'A',
 	nombre: 'Alba',
 	posicion: 0,
+	dadoActual: 0,
 	activado: true,
 };
 function actualizarJugadorA() {
@@ -445,8 +446,19 @@ actualizarJugadorA();
 const tirarDado = () => Math.floor(Math.random() * 6) + 1;
 const spanEjer12 = document.querySelector('#pEjer12 span');
 document.querySelector('#ejercicio12').addEventListener('click', () => {
-	spanEjer12.textContent = tirarDado();
+	pEjer15.textContent = '';
+	jugadorA.dadoActual = tirarDado();
+	spanEjer12.textContent = jugadorA.dadoActual;
 	jugadorA.posicion += parseInt(spanEjer12.textContent);
+	for (const casillaEsp of casillasEspeciales) {
+		if (jugadorA.posicion === casillaEsp.casilla) {
+			pEjer15.textContent = casillaEsp.mensaje;
+			if (casillaEsp.casilla === 16) {
+				return;
+			}
+			jugadorA.posicion = casillaEsp.salida;
+		}
+	}
 	actualizarJugadorA();
 });
 
@@ -457,3 +469,14 @@ const mensaje = `Jugador ${nombreJugador} ha sacado un ${tirarDado()}`;
 const fechaPartida = new Date();
 const mensajeFechaPartida = `Partida iniciada: ${fechaPartida.getDate()}/${fechaPartida.getMonth()}/${fechaPartida.getFullYear()}`;
 // console.log(mensajeFechaPartida);
+
+// EJERCICIO 15
+const pEjer15 = document.querySelector('#pEjer15');
+const casillasEspeciales = [
+	{ casilla: 4, mensaje: 'Avanzas a la casilla 9', salida: 9 },
+	{ casilla: 11, mensaje: 'Vuelves a la salida', salida: 0 },
+	{
+		casilla: 16,
+		mensaje: 'Pierdes el turno',
+	},
+];
