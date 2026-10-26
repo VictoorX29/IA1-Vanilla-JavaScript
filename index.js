@@ -452,3 +452,8 @@ document.querySelector('#ejercicio12').addEventListener('click', () => {
 
 // EJERCICIO 13
 const mensaje = `Jugador ${nombreJugador} ha sacado un ${tirarDado()}`;
+
+// EJERCICIO 14
+const fechaPartida = new Date();
+const mensajeFechaPartida = `Partida iniciada: ${fechaPartida.getDate()}/${fechaPartida.getMonth()}/${fechaPartida.getFullYear()}`;
+// console.log(mensajeFechaPartida);
