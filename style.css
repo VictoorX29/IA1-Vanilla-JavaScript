@@ -10,7 +10,7 @@ body {
 .menuLateral {
 	padding-block: 16px;
 	padding-inline: 24px;
-	background-color: rgba(47, 128, 237, 0.5);
+	background-color: rgb(3, 106, 179);
 }
 main {
 	width: 100%;
