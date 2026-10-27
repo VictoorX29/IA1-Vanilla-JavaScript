@@ -118,22 +118,39 @@ function colocarFichasInicio() {
 // Listeners buttons avanzar fichas
 buttonFichaA.addEventListener('click', () => {
 	const dado = generarDado();
+	console.log('Dado generado : ' + dado);
 	moverFicha(fichaA, partida.jugadores.A, dado);
 });
-buttonFichaB.addEventListener('click', () => {});
+buttonFichaB.addEventListener('click', () => {
+	const dado = generarDado();
+	console.log('Dado generado : ' + dado);
+	moverFicha(fichaB, partida.jugadores.B, dado);
+});
+// Prueba de función general
+function generarDadoMoverFicha() {
+	const dado = generarDado();
+	console.log('Dado generado para ' + partida.turno + ' : ' + dado);
+	moverFicha(
+		`ficha${partida.turno}`,
+		`partida.jugadores.${partida.turno}`,
+		dado,
+	);
+}
 
 // Función rescursiva para mover las fichas
 function moverFicha(ficha, jugador, dado = -1) {
-	if (dado > 0) {
-		// console.log(tablero[jugador.posicion].fichas[partida.turno.toLowerCase()]);
-		jugador.posicion += 1;
+	const inter = setInterval(() => {
+		if (dado === -1) {
+			jugador.posicion += dado;
+		}
+		if (dado > 0) {
+			jugador.posicion += 1;
+			moverFicha(ficha, jugador, dado - 1);
+		}
 		ficha.style.left =
 			tablero[jugador.posicion].fichas[partida.turno.toLowerCase()].x + 'px';
 		ficha.style.top =
 			tablero[jugador.posicion].fichas[partida.turno.toLowerCase()].y + 'px';
-
-		setInterval((dado) => {
-			moverFicha(ficha, jugador, dado - 1);
-		}, 1);
-	}
+		clearInterval(inter);
+	}, 500);
 }

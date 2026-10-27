@@ -31,6 +31,12 @@ main {
 	height: 50px;
 	position: absolute;
 	border-radius: 50%;
+	border: white 4px solid;
+	box-shadow:
+		0 2px 4px rgba(0, 0, 0, 0.35),
+		0 6px 12px rgba(0, 0, 0, 0.25);
+	transform: translateX(--x) translateY(--y);
+	transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 .fichaA {
 	--x: ;
