@@ -5,14 +5,17 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>IA1 - Vanilla JavaScript</title>
 		<link rel="stylesheet" href="style.css" />
+		<link rel="shortcut icon" href="images/favicon.png" type="image/x-icon" />
 	</head>
 	<body>
 		<div class="menuLateral">
 			<h1>Juego de la oca</h1>
 			<button id="btnStartGame">Empezar partida</button>
 			<p id="msgTurnoJugador" class="hidden"></p>
-			<button id="buttonA">Avanzar A</button>
-			<button id="buttonB">Avanzar B</button>
+			<button class="hidden" id="btnDado">Tirar dado</button>
+			<button id="btnReiniciar" class="hidden">Reiniciar partida</button>
+			<p>Estado partida</p>
+			<pre id="preEstadoPartida"></pre>
 		</div>
 
 		<main>
