@@ -4,32 +4,52 @@
 	box-sizing: border-box;
 }
 body {
-	display: grid;
-	grid-template-columns: 25% auto;
-}
-.menuLateral {
-	padding-block: 16px;
-	padding-inline: 24px;
-	background-color: rgb(3, 106, 179);
-}
-main {
+	position: relative;
 	width: 100%;
-	margin: 0 auto;
-}
-.container {
+	height: 100vh;
 	display: flex;
 	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+}
+.menuLateral {
+	box-sizing: border-box;
+	z-index: 10;
+	position: absolute;
+	bottom: -6px;
+	height: 64px;
+	display: flex;
+	flex-direction: column;
+	border-radius: 10px;
+	border: 2px solid white;
+	padding: 8px;
+	padding-bottom: 6px;
+	background-color: rgb(3, 106, 179);
+}
+.menuInfoPartida {
+	position: absolute;
+	right: 0;
+	z-index: 11;
+	background-color: rgb(3, 106, 179);
+}
+.container {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	background-color: rgba(2, 106, 179, 0.8);
 }
 .tablero {
 	position: relative;
-	width: min(100%, 90vh);
+	width: auto;
 }
 .tablero img {
 	display: block;
-	width: 100%;
-	height: auto;
+	width: auto;
+	height: 100%;
 }
 .fichas {
+	z-index: 5;
 	width: 6%;
 	height: 6%;
 	position: absolute;
@@ -56,6 +76,21 @@ main {
 	left: 0;
 	top: 0;
 	display: none;
+}
+#popUpPregunta {
+	position: absolute;
+	width: 100%;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 999;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+#popUpPregunta div {
+	background-color: white;
+	width: 60%;
+	height: auto;
 }
 .hidden {
 	display: none !important;

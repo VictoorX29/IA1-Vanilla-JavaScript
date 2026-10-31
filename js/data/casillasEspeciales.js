@@ -3,6 +3,7 @@ export const especiales = [
 	{ casilla: 5, mensaje: 'Pierdes el turno', turno: 0 },
 	{ casilla: 7, mensaje: 'Avanzas a la siguiente estrella', salida: 11 },
 	{ casilla: 12, mensaje: 'Vuelves a empezar', salida: 0 },
+	{ casilla: 14, mensaje: 'Suerte: avanzas a la casilla 28', salida: 28 },
 	{ casilla: 18, mensaje: 'Pierdes el turno', turno: 0 },
 	{ casilla: 22, mensaje: 'Avanzas 2 casillas', salida: 24 },
 	{ casilla: 25, mensaje: 'Mala suerte: vuelves a la casilla 9', salida: 9 },

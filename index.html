@@ -8,25 +8,31 @@
 		<link rel="shortcut icon" href="images/favicon.png" type="image/x-icon" />
 	</head>
 	<body>
+		<div class="hidden" id="popUpPregunta">
+			<div>
+				<h1 id="titPregunta"></h1>
+				<button id="btnResp1"></button>
+				<button id="btnResp2"></button>
+				<button id="btnResp3"></button>
+			</div>
+		</div>
 		<div class="menuLateral">
-			<h1>Juego de la oca</h1>
 			<button id="btnStartGame">Empezar partida</button>
-			<p id="msgTurnoJugador" class="hidden"></p>
 			<button class="hidden" id="btnDado">Tirar dado</button>
 			<button id="btnReiniciar" class="hidden">Reiniciar partida</button>
+		</div>
+		<div class="menuInfoPartida">
 			<p>Estado partida</p>
 			<pre id="preEstadoPartida"></pre>
 		</div>
 
-		<main>
-			<div class="container">
-				<div class="tablero">
-					<img src="images/tablero.webp" alt="" />
-					<div class="fichaA fichas"></div>
-					<div class="fichaB fichas"></div>
-				</div>
+		<div class="container">
+			<div class="tablero">
+				<img src="images/tablero.webp" alt="" />
+				<div class="fichaA fichas"></div>
+				<div class="fichaB fichas"></div>
 			</div>
-		</main>
+		</div>
 		<script type="module" src="js/game.js"></script>
 	</body>
 </html>
