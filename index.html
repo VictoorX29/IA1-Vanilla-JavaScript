@@ -1,73 +1,79 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>IA1 - Vanilla JavaScript</title>
 		<link rel="stylesheet" href="style.css" />
+		<link rel="shortcut icon" href="images/favicon.png" type="image/x-icon" />
 	</head>
 	<body>
-		<h1>IA1 - Vanilla JavaScript</h1>
-		<div id="main"></div>
-		<button id="sumar">Sumar</button>
-		<button id="multi">Multiplicación</button>
-		<div id="suma"></div>
-		<div id="mult"></div>
-		<form id="numero">
-			<input type="text" id="num" />
-			<button type="submit">Enviar</button>
-			<p id="errorNum"></p>
-		</form>
-		<div>
-			<select name="selectEstat" id="selectEstat">
-				<option value="" disabled selected>Selecciona una opción</option>
-				<option value="inicio">Inicio</option>
-				<option value="turnoA">Turno A</option>
-				<option value="turnoB">Turno B</option>
-				<option value="final">Final</option>
-			</select>
-			<p id="msgEstat"></p>
-			<button id="buttonColor">Cambiar color</button>
+		<div id="popUpNombres" class="hidden">
+			<div>
+				<form id="formPopUpNombres">
+					<p id="tituloPopUpNombres">¿Quién juega?</p>
+					<div>
+						<label for="nombreA">Jugador A</label>
+						<input
+							type="text"
+							name="nombreA"
+							id="nombreA"
+							placeholder="Introduce el nombre para el Jugador A" />
+						<small id="pErrorNombreA" class="hidden"></small>
+					</div>
+					<div>
+						<label for="nombreB">Jugador B</label>
+						<input
+							type="text"
+							name="nombreB"
+							id="nombreB"
+							placeholder="Introduce el nombre para el Jugador B" />
+						<small id="pErrorNombreB" class="hidden"></small>
+					</div>
+					<button id="btnPopUpNombres" type="submit">Continuar</button>
+				</form>
+			</div>
 		</div>
-		<div>
-			<p id="msgTurno">Es turno del jugador <span>A</span></p>
-			<p id="msgCasilla"></p>
-			<button id="lanzarDado">Lanzar Dado</button>
-			<p id="msgDado"></p>
+		<div id="popUpMensaje" class="hidden">
+			<div>
+				<p id="msgPopUpMensaje"></p>
+				<button id="btnPopUpMensaje">Continuar</button>
+			</div>
 		</div>
-		<div>
-			<p id="msgJugA">Jugador A: <span></span></p>
-			<form action="" id="formNom">
-				<input type="text" id="inputFormNom" />
-				<button type="submit">Enviar nombre</button>
-			</form>
+		<div class="hidden" id="popUpPregunta">
+			<div id="divPregunta">
+				<h1 id="titPregunta"></h1>
+				<button id="btnResp1"></button>
+				<button id="btnResp2"></button>
+				<button id="btnResp3"></button>
+				<small
+					>Haz clic o responde con el teclado: <kbd>1</kbd> <kbd>2</kbd>
+					<kbd>3</kbd></small
+				>
+			</div>
+			<div class="" id="popUpResp">
+				<p></p>
+				<button>Continuar</button>
+			</div>
 		</div>
-		<div>
-			<p id="infoJugA">
-				El jugador A está en la casilla <span id="casillaNum"> </span> (
-				<span id="casillaText"> </span> )
-			</p>
-			<p id="infoJugB">
-				El jugador B está en la casilla <span id="casillaNum"> </span> (
-				<span id="casillaText"> </span> )
-			</p>
+		<div class="menuLateral">
+			<button id="btnStartGame">Empezar partida</button>
+			<p id="msgTurnoJug" class="hidden"></p>
+			<button class="hidden" id="btnDado">Tirar dado</button>
+		</div>
+		<div class="menuInfoPartida hidden">
+			<p>Estado partida</p>
+			<pre id="preEstadoPartida"></pre>
+			<button id="btnReiniciar" class="hidden">Reiniciar partida</button>
 		</div>
 
-		<div id="divPregunta">
-			<h2></h2>
-			<div id="divPreguntas"></div>
-			<p id="tipoRespuesta"></p>
+		<div class="container">
+			<div class="tablero">
+				<img src="images/tablero.webp" alt="" />
+				<div class="fichaA fichas"></div>
+				<div class="fichaB fichas"></div>
+			</div>
 		</div>
-		<div id="divTableroJugadores">
-			<div id="tablero"></div>
-			<div id="divFichJugA" class="fichas"><span>A</span></div>
-			<div id="divFichJugB" class="fichas"><span>B</span></div>
-		</div>
-		<div id="infoJugadorA"></div>
-		<!-- EJERCICIO 12 -->
-		<button id="ejercicio12">Tirar dado</button>
-		<p id="pEjer12">Has sacado el <span></span></p>
-		<p id="pEjer15"></p>
-		<script src="index.js"></script>
+		<script type="module" src="js/game.js"></script>
 	</body>
 </html>
