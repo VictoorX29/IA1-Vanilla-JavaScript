@@ -1,3 +1,13 @@
+:root {
+	--azul: rgb(3, 106, 179);
+	--azul-oscuro: rgb(2, 70, 120);
+	--acento: #ffc83d;
+	--acento-oscuro: #f0a500;
+	--cristal: rgba(3, 60, 105, 0.72);
+	--borde: rgba(255, 255, 255, 0.35);
+	--sombra: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
 * {
 	margin: 0;
 	padding: 0;
@@ -11,27 +21,126 @@ body {
 	justify-content: center;
 	align-items: center;
 	overflow: hidden;
+	font-family:
+		'Segoe UI',
+		system-ui,
+		-apple-system,
+		sans-serif;
+	color: white;
+}
+
+/* ---------- Menús flotantes ---------- */
+.menuLateral,
+.menuInfoPartida {
+	z-index: 10;
+	background: var(--cristal);
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+	border: 1px solid var(--borde);
+	border-radius: 16px;
+	box-shadow: var(--sombra);
+	padding: 12px 16px;
 }
 .menuLateral {
-	box-sizing: border-box;
-	z-index: 10;
 	position: absolute;
-	bottom: -6px;
-	height: 64px;
+	bottom: 16px;
 	display: flex;
 	flex-direction: column;
-	border-radius: 10px;
-	border: 2px solid white;
-	padding: 8px;
-	padding-bottom: 6px;
-	background-color: rgb(3, 106, 179);
+	align-items: center;
+	gap: 10px;
+	font-weight: 600;
+	letter-spacing: 0.2px;
+	text-align: center;
 }
 .menuInfoPartida {
 	position: absolute;
-	right: 0;
+	top: 16px;
+	right: 16px;
 	z-index: 11;
-	background-color: rgb(3, 106, 179);
+	max-width: 260px;
+	max-height: 40vh;
+	overflow: auto;
+	font-size: 0.8rem;
 }
+.menuInfoPartida pre {
+	font-family: 'Consolas', 'Courier New', monospace;
+	white-space: pre-wrap;
+	color: #d8efff;
+}
+.menuInfoPartida p {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 0.75rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 1.5px;
+	color: var(--acento);
+	padding-bottom: 8px;
+	margin-bottom: 8px;
+	border-bottom: 1px solid var(--borde);
+}
+.menuInfoPartida p::before {
+	content: '';
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: var(--acento);
+	box-shadow: 0 0 8px var(--acento);
+}
+
+/* ---------- Botones ---------- */
+button {
+	font: inherit;
+	font-weight: 700;
+	cursor: pointer;
+	color: #3a2a00;
+	background: linear-gradient(180deg, var(--acento), var(--acento-oscuro));
+	border: none;
+	border-radius: 999px;
+	padding: 10px 22px;
+	box-shadow:
+		0 4px 0 #b57a00,
+		0 6px 12px rgba(0, 0, 0, 0.3);
+	transition:
+		transform 120ms ease,
+		box-shadow 120ms ease,
+		filter 120ms ease;
+}
+button:hover {
+	filter: brightness(1.08);
+	transform: translateY(-2px);
+}
+button:active {
+	transform: translateY(3px);
+	box-shadow:
+		0 1px 0 #b57a00,
+		0 2px 6px rgba(0, 0, 0, 0.3);
+}
+button:focus-visible {
+	outline: 3px solid white;
+	outline-offset: 3px;
+}
+button:disabled {
+	cursor: not-allowed;
+	filter: grayscale(1) brightness(0.8);
+	transform: none;
+	box-shadow: none;
+}
+/* Botón de reiniciar: secundario */
+#btnReiniciar {
+	color: white;
+	background: rgba(255, 255, 255, 0.15);
+	border: 1px solid var(--borde);
+	box-shadow: none;
+	font-weight: 600;
+	padding: 8px 16px;
+}
+#btnReiniciar:hover {
+	background: rgba(255, 80, 80, 0.55);
+}
+
+/* ---------- Tablero ---------- */
 .container {
 	width: 100%;
 	height: 100%;
@@ -48,6 +157,8 @@ body {
 	width: auto;
 	height: 100%;
 }
+
+/* ---------- Fichas (sin cambios) ---------- */
 .fichas {
 	z-index: 5;
 	width: 6%;
@@ -77,21 +188,290 @@ body {
 	top: 0;
 	display: none;
 }
+
+/* ---------- Popup de pregunta ---------- */
 #popUpPregunta {
 	position: absolute;
 	width: 100%;
 	height: 100vh;
-	background-color: rgba(0, 0, 0, 0.5);
+	background-color: rgba(0, 0, 0, 0.55);
+	backdrop-filter: blur(4px);
+	-webkit-backdrop-filter: blur(4px);
 	z-index: 999;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
 #popUpPregunta div {
-	background-color: white;
-	width: 60%;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	width: min(60%, 560px);
 	height: auto;
+	padding: 28px;
+	background: white;
+	color: #1b2a38;
+	border-radius: 20px;
+	border-top: 8px solid var(--acento);
+	box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+	animation: aparecer 250ms ease-out;
 }
+#popUpPregunta :is(h1, h2, h3, p) {
+	font-size: 1.3rem;
+	line-height: 1.35;
+	margin-bottom: 8px;
+}
+#popUpPregunta button {
+	width: 100%;
+	text-align: left;
+	color: #1b2a38;
+	background: #eef5fb;
+	border: 2px solid #cfe2f3;
+	border-radius: 12px;
+	padding: 12px 16px;
+	box-shadow: none;
+}
+#popUpPregunta button:hover {
+	background: var(--azul);
+	color: white;
+	border-color: var(--azul);
+	transform: translateX(4px);
+	filter: none;
+}
+#popUpPregunta button:active {
+	transform: translateX(4px) scale(0.98);
+	box-shadow: none;
+}
+#popUpPregunta small {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	margin-top: 6px;
+	padding-top: 12px;
+	border-top: 1px solid #dde8f2;
+	font-size: 0.8rem;
+	color: #5b7083;
+}
+
+#popUpPregunta kbd {
+	display: inline-block;
+	min-width: 24px;
+	padding: 2px 6px;
+	text-align: center;
+	font-family: inherit;
+	font-size: 0.8rem;
+	font-weight: 700;
+	color: #1b2a38;
+	background: #f6f9fc;
+	border: 1px solid #cfe2f3;
+	border-bottom-width: 3px;
+	border-radius: 6px;
+}
+@keyframes aparecer {
+	from {
+		opacity: 0;
+		transform: translateY(16px) scale(0.96);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+/* ---------- Popup de mensaje (alert propio) ---------- */
+#popUpMensaje {
+	position: absolute;
+	width: 100%;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.55);
+	backdrop-filter: blur(4px);
+	-webkit-backdrop-filter: blur(4px);
+	z-index: 1000;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+#popUpMensaje div {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	width: min(60%, 560px);
+	height: auto;
+	padding: 28px;
+	background: white;
+	color: #1b2a38;
+	border-radius: 20px;
+	border-top: 8px solid var(--acento);
+	box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+	animation: aparecer 250ms ease-out;
+}
+
+/* Título, igual que el de la pregunta */
+#msgPopUpMensaje {
+	font-size: 1.3rem;
+	font-weight: 700;
+	line-height: 1.35;
+	margin-bottom: 8px;
+}
+
+#popUpMensaje button {
+	width: 100%;
+	text-align: center;
+	color: #1b2a38;
+	background: #eef5fb;
+	border: 2px solid #cfe2f3;
+	border-radius: 12px;
+	padding: 12px 16px;
+	box-shadow: none;
+}
+#popUpMensaje button:hover {
+	background: var(--azul);
+	color: white;
+	border-color: var(--azul);
+	transform: translateX(4px);
+	filter: none;
+}
+#popUpMensaje button:active {
+	transform: translateX(4px) scale(0.98);
+	box-shadow: none;
+}
+/* ---------- Popup de nombres (inicio de partida) ---------- */
+#popUpNombres {
+	position: absolute;
+	width: 100%;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.55);
+	backdrop-filter: blur(4px);
+	-webkit-backdrop-filter: blur(4px);
+	z-index: 1001;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+/* ">" para que solo afecte a la tarjeta y no a los div de cada campo */
+#popUpNombres > div {
+	width: min(60%, 560px);
+	padding: 28px;
+	background: white;
+	color: #1b2a38;
+	border-radius: 20px;
+	border-top: 8px solid var(--acento);
+	box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+	animation: aparecer 250ms ease-out;
+}
+#formPopUpNombres {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+/* Título, igual que los otros popups */
+#tituloPopUpNombres {
+	font-size: 1.3rem;
+	font-weight: 700;
+	line-height: 1.35;
+}
+
+/* Cada campo */
+#formPopUpNombres > div {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+#formPopUpNombres label {
+	font-size: 0.75rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 1.5px;
+	color: #5b7083;
+}
+#formPopUpNombres input {
+	width: 100%;
+	font: inherit;
+	color: #1b2a38;
+	background: #eef5fb;
+	border: 2px solid #cfe2f3;
+	border-radius: 12px;
+	padding: 12px 16px;
+	transition:
+		border-color 120ms ease,
+		background 120ms ease;
+}
+#formPopUpNombres input::placeholder {
+	color: #8aa0b3;
+}
+#formPopUpNombres input:focus {
+	outline: none;
+	background: white;
+	border-color: var(--azul);
+	box-shadow: 0 0 0 3px rgba(3, 106, 179, 0.2);
+}
+
+/* Botón, igual que el de los mensajes */
+#btnPopUpNombres {
+	width: 100%;
+	text-align: center;
+	color: #1b2a38;
+	background: #eef5fb;
+	border: 2px solid #cfe2f3;
+	border-radius: 12px;
+	padding: 12px 16px;
+	box-shadow: none;
+}
+#btnPopUpNombres:hover {
+	background: var(--azul);
+	color: white;
+	border-color: var(--azul);
+	transform: translateX(4px);
+	filter: none;
+}
+#btnPopUpNombres:active {
+	transform: translateX(4px) scale(0.98);
+	box-shadow: none;
+}
+/* Mensaje de error de los campos */
+#formPopUpNombres small {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 0.8rem;
+	font-weight: 600;
+	line-height: 1.3;
+	color: #d64545;
+	animation: aparecerError 200ms ease-out;
+}
+#formPopUpNombres small::before {
+	content: '!';
+	flex: none;
+	display: grid;
+	place-items: center;
+	width: 16px;
+	height: 16px;
+	font-size: 0.7rem;
+	font-weight: 800;
+	color: white;
+	background: #d64545;
+	border-radius: 50%;
+}
+/* Input marcado en rojo cuando su campo tiene error visible */
+#formPopUpNombres > div:has(small:not(.hidden)) input {
+	border-color: #d64545;
+	background: #fff1f1;
+}
+#formPopUpNombres > div:has(small:not(.hidden)) input:focus {
+	box-shadow: 0 0 0 3px rgba(214, 69, 69, 0.2);
+}
+@keyframes aparecerError {
+	from {
+		opacity: 0;
+		transform: translateY(-4px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
 .hidden {
 	display: none !important;
 }

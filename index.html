@@ -8,22 +8,63 @@
 		<link rel="shortcut icon" href="images/favicon.png" type="image/x-icon" />
 	</head>
 	<body>
-		<div class="hidden" id="popUpPregunta">
+		<div id="popUpNombres" class="hidden">
 			<div>
+				<form id="formPopUpNombres">
+					<p id="tituloPopUpNombres">¿Quién juega?</p>
+					<div>
+						<label for="nombreA">Jugador A</label>
+						<input
+							type="text"
+							name="nombreA"
+							id="nombreA"
+							placeholder="Introduce el nombre para el Jugador A" />
+						<small id="pErrorNombreA" class="hidden"></small>
+					</div>
+					<div>
+						<label for="nombreB">Jugador B</label>
+						<input
+							type="text"
+							name="nombreB"
+							id="nombreB"
+							placeholder="Introduce el nombre para el Jugador B" />
+						<small id="pErrorNombreB" class="hidden"></small>
+					</div>
+					<button id="btnPopUpNombres" type="submit">Continuar</button>
+				</form>
+			</div>
+		</div>
+		<div id="popUpMensaje" class="hidden">
+			<div>
+				<p id="msgPopUpMensaje"></p>
+				<button id="btnPopUpMensaje">Continuar</button>
+			</div>
+		</div>
+		<div class="hidden" id="popUpPregunta">
+			<div id="divPregunta">
 				<h1 id="titPregunta"></h1>
 				<button id="btnResp1"></button>
 				<button id="btnResp2"></button>
 				<button id="btnResp3"></button>
+				<small
+					>Haz clic o responde con el teclado: <kbd>1</kbd> <kbd>2</kbd>
+					<kbd>3</kbd></small
+				>
+			</div>
+			<div class="" id="popUpResp">
+				<p></p>
+				<button>Continuar</button>
 			</div>
 		</div>
 		<div class="menuLateral">
 			<button id="btnStartGame">Empezar partida</button>
+			<p id="msgTurnoJug" class="hidden"></p>
 			<button class="hidden" id="btnDado">Tirar dado</button>
-			<button id="btnReiniciar" class="hidden">Reiniciar partida</button>
 		</div>
-		<div class="menuInfoPartida">
+		<div class="menuInfoPartida hidden">
 			<p>Estado partida</p>
 			<pre id="preEstadoPartida"></pre>
+			<button id="btnReiniciar" class="hidden">Reiniciar partida</button>
 		</div>
 
 		<div class="container">

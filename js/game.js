@@ -16,38 +16,77 @@ const btnReiniciar = document.querySelector('#btnReiniciar');
 const btnResp1 = document.querySelector('#btnResp1');
 const btnResp2 = document.querySelector('#btnResp2');
 const btnResp3 = document.querySelector('#btnResp3');
+const btnPopUpMensaje = document.querySelector('#btnPopUpMensaje');
 
 // QS Divs
 const fichaA = document.querySelector('.fichaA');
 const fichaB = document.querySelector('.fichaB');
 // const divTablero = document.querySelector('.tablero img');
 const divPregRand = document.querySelector('#popUpPregunta');
+const divPregResp = document.querySelector('#popUpResp');
+const divInfoPartida = document.querySelector('.menuInfoPartida');
+const divPopUpMensaje = document.querySelector('#popUpMensaje');
+const divPopUpNombres = document.querySelector('#popUpNombres');
 
 // QS Texto
-const msgTurnoJug = document.querySelector('#msgTurnoJugador');
+const msgTurnoJug = document.querySelector('#msgTurnoJug');
 const preEstadoPartida = document.querySelector('#preEstadoPartida');
 const titPregunta = document.querySelector('#titPregunta');
+const msgPopUpMensaje = document.querySelector('#msgPopUpMensaje');
+const pErrorNombreA = document.querySelector('#pErrorNombreA');
+const pErrorNombreB = document.querySelector('#pErrorNombreB');
 
+// QS Formulario
+const formPopUpNombres = document.querySelector('#formPopUpNombres');
+// Async arrow function para mostrar mensaje y
+// esperar a que se clique en Aceptar para continuar el juego
+const mostrarPopUpMensaje = (jugador, mensaje) => {
+	return new Promise((promesa) => {
+		divPopUpMensaje.classList.remove('hidden');
+		if (jugador) {
+			msgPopUpMensaje.textContent =
+				`Jugador ${partida.turno} - ${jugador.nombre} : ` + mensaje;
+		} else {
+			msgPopUpMensaje.textContent = mensaje;
+		}
+
+		btnPopUpMensaje.addEventListener(
+			'click',
+			() => {
+				divPopUpMensaje.classList.add('hidden');
+				promesa();
+			},
+			{ once: true },
+		);
+	});
+};
 // Mensaje para sacar por pantalla
 const msgJugDado = (jugador, turno) =>
-	`Es el turno del jugador ${turno} (${jugador.nombre}) - Posición ${jugador.posicion}`;
+	`Es el turno del Jugador ${turno} (${jugador.nombre}) - Casilla ${jugador.posicion}`;
 
 // Función para cambiar de turno
 const alternarTurno = () => {
 	btnTirarDado.disabled = false;
+	if (msgTurnoJug.classList.contains('hidden'))
+		msgTurnoJug.classList.remove('hidden');
 	if (partida.turno == 'A') {
 		partida.turno = 'B';
+		msgTurnoJug.textContent = msgJugDado(partida.jugadores.B, partida.turno);
 	} else if (partida.turno == 'B') {
 		partida.turno = 'A';
+		msgTurnoJug.textContent = msgJugDado(partida.jugadores.A, partida.turno);
 	} else {
 		console.error('Error');
 	}
+
 	if (
 		partida.jugadores.A.posicion == 36 &&
 		partida.jugadores.B.posicion == 36
 	) {
-		console.log('La partida ha acabado.');
-		btnTirarDado.disabled = true;
+		msgTurnoJug.classList.add('hidden');
+		btnTirarDado.textContent = 'Reiniciar partida';
+		btnTirarDado.id = 'btnReiniciar';
+		mostrarPopUpMensaje('', 'La partida ha acabado');
 		return;
 	}
 	if (partida.jugadores[partida.turno].posicion == 36) {
@@ -55,7 +94,8 @@ const alternarTurno = () => {
 	}
 	actualizarLS();
 };
-// // Listener para posiciones del tablero
+
+// Listener para obtener posiciones del tablero
 // divTablero.addEventListener('click', (e) => {
 // 	const rect = divTablero.getBoundingClientRect();
 // 	const offsetX =
@@ -67,7 +107,10 @@ const alternarTurno = () => {
 
 // Listener para empezar la partida con su función
 btnStartGame.addEventListener('click', colocarFichasInicio);
-function colocarFichasInicio() {
+async function colocarFichasInicio() {
+	if (!partida) {
+		await inicioPartida();
+	}
 	fichaA.style.display = 'block';
 	fichaB.style.display = 'block';
 
@@ -79,8 +122,28 @@ function colocarFichasInicio() {
 	fichaB.style.top = tablero[partida.jugadores.B.posicion].fichas.b.y + '%';
 	btnStartGame.removeEventListener('click', colocarFichasInicio);
 	btnStartGame.classList.add('hidden');
+	divInfoPartida.classList.remove('hidden');
 	btnTirarDado.classList.remove('hidden');
 	btnReiniciar.classList.remove('hidden');
+	let jugador = '';
+	if (
+		partida.jugadores.A.posicion == 36 &&
+		partida.jugadores.B.posicion == 36
+	) {
+		msgTurnoJug.classList.add('hidden');
+		btnTirarDado.textContent = 'Reiniciar partida';
+		btnTirarDado.id = 'btnReiniciar';
+		return;
+	} else {
+		msgTurnoJug.classList.remove('hidden');
+		if (partida.turno == 'A') jugador = 'A';
+		if (partida.turno == 'B') jugador = 'B';
+		msgTurnoJug.textContent = msgJugDado(
+			partida.jugadores[jugador],
+			partida.turno,
+		);
+	}
+
 	actualizarLS();
 }
 
@@ -96,13 +159,15 @@ function comprobarCasillaEsp(jugador) {
 
 // Función para mostrar pregunta aleatoria
 function mostrarPregunta(ficha, jugador) {
+	divPregRand.classList.remove('hidden');
+	divPregRand.querySelector('#divPregunta').classList.remove('hidden');
+	divPregResp.classList.add('hidden');
 	const num = generarNum(preguntas.length);
 	const pregRand = preguntas[num];
 	titPregunta.textContent = pregRand.pregunta;
 	btnResp1.textContent = pregRand.respuestas[0];
 	btnResp2.textContent = pregRand.respuestas[1];
 	btnResp3.textContent = pregRand.respuestas[2];
-	divPregRand.classList.remove('hidden');
 	if (divPregRand.checkVisibility()) {
 		document.addEventListener('keydown', verificarRespuesta);
 		btnResp1.addEventListener('click', verificarRespuesta);
@@ -120,74 +185,114 @@ function mostrarPregunta(ficha, jugador) {
 		const buttonId = button.id.slice(7, 8);
 		let resp = '';
 		if (tecla === '1' || tecla === '2' || tecla === '3') {
-			divPregRand.classList.add('hidden');
+			divPregRand.querySelector('#divPregunta').classList.add('hidden');
+			divPregResp.classList.remove('hidden');
 			resp = verificarCorrecta(tecla - 1, pregRand.correcta);
 			if (resp) {
-				document.removeEventListener('keydown', verificarRespuesta);
-				btnResp1.removeEventListener('click', verificarRespuesta);
-				btnResp2.removeEventListener('click', verificarRespuesta);
-				btnResp3.removeEventListener('click', verificarRespuesta);
-				alert('Respuesta correcta');
-				alternarTurno();
-				return;
+				divPregResp.querySelector('p').textContent = 'Respuesta correcta';
 			} else {
-				document.removeEventListener('keydown', verificarRespuesta);
-				btnResp1.removeEventListener('click', verificarRespuesta);
-				btnResp2.removeEventListener('click', verificarRespuesta);
-				btnResp3.removeEventListener('click', verificarRespuesta);
-				alert('Respuesta incorrecta');
-				moverFicha(ficha, jugador, -1, false, 0);
-				return;
+				divPregResp.querySelector('p').textContent = 'Respuesta incorrecta';
 			}
+			divPregResp.querySelector('button').addEventListener(
+				'click',
+				() => {
+					divPregRand.classList.add('hidden');
+					divPregResp.classList.add('hidden');
+					if (resp) {
+						document.removeEventListener('keydown', verificarRespuesta);
+						btnResp1.removeEventListener('click', verificarRespuesta);
+						btnResp2.removeEventListener('click', verificarRespuesta);
+						btnResp3.removeEventListener('click', verificarRespuesta);
+						alternarTurno();
+						return;
+					} else {
+						document.removeEventListener('keydown', verificarRespuesta);
+						btnResp1.removeEventListener('click', verificarRespuesta);
+						btnResp2.removeEventListener('click', verificarRespuesta);
+						btnResp3.removeEventListener('click', verificarRespuesta);
+						moverFicha(ficha, jugador, -1, false, 0);
+						return;
+					}
+				},
+				{ once: true },
+			);
 		} else if (buttonId === '1' || buttonId === '2' || buttonId === '3') {
-			divPregRand.classList.add('hidden');
+			divPregRand.querySelector('#divPregunta').classList.add('hidden');
+			divPregResp.classList.remove('hidden');
 			resp = verificarCorrecta(buttonId - 1, pregRand.correcta);
 			if (resp) {
-				document.removeEventListener('keydown', verificarRespuesta);
-				btnResp1.removeEventListener('click', verificarRespuesta);
-				btnResp2.removeEventListener('click', verificarRespuesta);
-				btnResp3.removeEventListener('click', verificarRespuesta);
-				alert('Respuesta correcta');
-				alternarTurno();
-				return;
+				divPregResp.querySelector('p').textContent = 'Respuesta correcta';
 			} else {
-				document.removeEventListener('keydown', verificarRespuesta);
-				btnResp1.removeEventListener('click', verificarRespuesta);
-				btnResp2.removeEventListener('click', verificarRespuesta);
-				btnResp3.removeEventListener('click', verificarRespuesta);
-				alert('Respuesta incorrecta');
-				moverFicha(ficha, jugador, -1, false, 0);
-				return;
+				divPregResp.querySelector('p').textContent = 'Respuesta incorrecta';
 			}
+			divPregResp.querySelector('button').addEventListener(
+				'click',
+				() => {
+					divPregRand.classList.add('hidden');
+					divPregResp.classList.add('hidden');
+					if (resp) {
+						document.removeEventListener('keydown', verificarRespuesta);
+						btnResp1.removeEventListener('click', verificarRespuesta);
+						btnResp2.removeEventListener('click', verificarRespuesta);
+						btnResp3.removeEventListener('click', verificarRespuesta);
+						alternarTurno();
+						return;
+					} else {
+						document.removeEventListener('keydown', verificarRespuesta);
+						btnResp1.removeEventListener('click', verificarRespuesta);
+						btnResp2.removeEventListener('click', verificarRespuesta);
+						btnResp3.removeEventListener('click', verificarRespuesta);
+						moverFicha(ficha, jugador, -1, false, 0);
+						return;
+					}
+				},
+				{ once: true },
+			);
 		}
 	}
 }
 
 // Botón para generar dado aleatorio y mover la ficha del turno
-btnDado.addEventListener('click', () => {
-	// const dado = generarNum(6);
-	const dado = 3;
-	if (partida.turno === 'A') {
-		moverFicha(fichaA, partida.jugadores.A, dado, true);
-	} else if (partida.turno === 'B') {
-		moverFicha(fichaB, partida.jugadores.B, dado, true);
+btnTirarDado.addEventListener('click', async () => {
+	if (
+		partida.jugadores.A.posicion == 36 &&
+		partida.jugadores.B.posicion == 36
+	) {
+		reiniciarPartida();
 	} else {
-		alert('Error');
+		const dado = generarNum(6);
+		// const dado = 2;
+		if (partida.turno === 'A') {
+			await mostrarPopUpMensaje(partida.jugadores.A, `Ha sacado un ${dado}`);
+			moverFicha(fichaA, partida.jugadores.A, dado, true);
+		} else if (partida.turno === 'B') {
+			await mostrarPopUpMensaje(partida.jugadores.B, `Ha sacado un ${dado}`);
+			moverFicha(fichaB, partida.jugadores.B, dado, true);
+		} else {
+			alert('Error');
+		}
 	}
 });
 
 // Función rescursiva para mover las fichas
-function moverFicha(ficha, jugador, dado, adelante = true, cont = 0) {
+async function moverFicha(ficha, jugador, dado, adelante = true, cont = 0) {
 	btnTirarDado.disabled = true;
 	if (adelante) {
 		// Cuando la ficha vaya hacia delante
-		if (jugador.posicion > 35 && dado > 0) {
-			moverFicha(ficha, jugador, (dado *= -1), false);
+		if (jugador.posicion > 35 && cont < dado) {
+			moverFicha(ficha, jugador, (dado *= -1), false, cont * -1);
 			return;
-		} else if (jugador.posicion == 36 && dado == 0) {
-			console.log('¡' + jugador.nombre + ' has ganado!');
+		} else if (jugador.posicion == 36 && cont == dado) {
+			if (
+				(partida.turno == 'B' && partida.jugadores.A.posicion == 36) ||
+				(partida.turno == 'A' && partida.jugadores.B.posicion == 36)
+			) {
+				await mostrarPopUpMensaje(jugador, 'Has quedado segundo');
+			} else {
+				await mostrarPopUpMensaje(jugador, '¡Has ganado!');
+			}
 		}
-		const timer = setInterval(() => {
+		const timer = setInterval(async () => {
 			if (cont < dado) {
 				jugador.posicion += 1;
 				ficha.style.left =
@@ -200,7 +305,7 @@ function moverFicha(ficha, jugador, dado, adelante = true, cont = 0) {
 				clearInterval(timer);
 				const casillaEsp = comprobarCasillaEsp(jugador);
 				if (casillaEsp) {
-					alert(casillaEsp.mensaje);
+					await mostrarPopUpMensaje(jugador, casillaEsp.mensaje);
 					if (casillaEsp.salida || casillaEsp.salida == 0) {
 						if (casillaEsp.salida > jugador.posicion) {
 							moverFicha(
@@ -229,7 +334,7 @@ function moverFicha(ficha, jugador, dado, adelante = true, cont = 0) {
 							alternarTurno();
 						}
 					}
-				} else {
+				} else if (jugador.posicion != 36) {
 					mostrarPregunta(ficha, jugador);
 					return;
 				}
@@ -257,22 +362,50 @@ function moverFicha(ficha, jugador, dado, adelante = true, cont = 0) {
 	actualizarLS();
 }
 
-// const hola = await moverFicha(fichaA, partida.jugadores.A, 2);
-// console.log(hola);
-
 // Obtener partida localStorage
 let partida = '';
 partida = JSON.parse(localStorage.getItem('partida'));
 if (partida) {
 	colocarFichasInicio();
-} else {
-	partida = {
-		turno: 'A',
-		jugadores: {
-			A: { nombre: 'Alba', posicion: 0 },
-			B: { nombre: 'Victor', posicion: 0 },
-		},
-	};
+}
+// Function para empezar la partida y cambiar los nombres de los jugadores
+function inicioPartida() {
+	return new Promise((promesa) => {
+		divPopUpNombres.classList.remove('hidden');
+		formPopUpNombres.addEventListener('submit', (e) => {
+			e.preventDefault();
+			const inputJugA = document.querySelector('input#nombreA');
+			const inputJugB = document.querySelector('input#nombreB');
+			if (!inputJugA.value.trim() || !inputJugB.value.trim()) {
+				if (!inputJugA.value.trim()) {
+					pErrorNombreA.classList.remove('hidden');
+					pErrorNombreA.textContent = 'Error: no puede estar en blanco';
+				} else {
+					pErrorNombreA.classList.add('hidden');
+				}
+				if (!inputJugB.value.trim()) {
+					pErrorNombreB.classList.remove('hidden');
+					pErrorNombreB.textContent = 'Error: no puede estar en blanco';
+				} else {
+					pErrorNombreB.classList.add('hidden');
+				}
+			} else if (inputJugA.value.trim() === inputJugB.value.trim()) {
+				pErrorNombreB.classList.remove('hidden');
+				pErrorNombreB.textContent = 'Error: los nombres no deben coincidir';
+			} else {
+				partida = {
+					turno: 'A',
+					jugadores: {
+						A: { nombre: inputJugA.value, posicion: 0 },
+						B: { nombre: inputJugB.value, posicion: 0 },
+					},
+				};
+				divPopUpNombres.classList.add('hidden');
+				actualizarLS();
+				promesa();
+			}
+		});
+	});
 }
 
 function actualizarLS() {
